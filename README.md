@@ -236,7 +236,7 @@ The project uses DuckDB as the local analytical database. Required Python packag
 Clone the repository and navigate to the project directory:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ameyatalwar/ai-ready-finance-data-platform.git
 cd ai-ready-finance-data-platform
 ```
 
