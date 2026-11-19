@@ -1,0 +1,17 @@
+# Python virtual environment
+.venv/
+
+# Python generated cache files
+__pycache__/
+*.pyc
+
+# Local DuckDB databases
+*.duckdb
+
+# macOS generated files
+.DS_Store
+
+# Local developmental backups
+src/ingestion/ingest_raw_v1.py
+src/orchestration/run_pipeline_v1.py
+src/profiling/profile_raw_v1.py

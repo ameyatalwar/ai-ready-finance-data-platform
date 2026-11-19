@@ -1,0 +1,8 @@
+Employee ID,First name,Last name,Start date,End date,Department,Cost Center,Job sub family,Job level,Comp region
+100,Minerva,McGonagall,7/9/2004,,Finance,C01,Vice President,L8,US_PREMIUM
+101,Rubeus,Hagrid,9/11/2008,,HR,C01,Vice President,L8,US_PREMIUM
+102,Severus,Snape,2/26/1998,,Supply Chain,C01,Vice President,L8,US_PREMIUM
+104,Harry ,Potter,10/1/2026,,Finance,C01,Director,L5,US_PREMIUM
+105,Hermione ,Granger,8/1/2026,,HR,C01,Senior Data Engineer,L4,US_PREMIUM
+ABC,Voldemort,Voldemort,10/7/2026,,HR,C01,Data Engineer,L3,US_PREMIUM
+107,Ron,Weasley,8/1/2026,,Supply Chain,C01,Business analyst,L5,US_ATX

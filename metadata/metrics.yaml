@@ -1,0 +1,223 @@
+metrics:
+
+  payroll_variance:
+    display_name: "Payroll Variance"
+
+    description: >
+      Difference between actual payroll expense and planned payroll
+      expense for a cost center and department during a reporting month.
+
+    formula: "actual_payroll - planned_payroll"
+
+    input_metrics:
+      - actual_payroll
+      - planned_payroll
+
+    source:
+      table: "business.department_monthly_performance"
+      column: "payroll_variance"
+
+    grain:
+      - cost_center
+      - department
+      - month
+      - year
+
+    unit: "currency"
+
+    interpretation:
+      positive: "Actual payroll is above plan"
+      negative: "Actual payroll is below plan"
+      zero: "Actual payroll equals plan"
+
+    aggregation:
+      across_departments: "additive"
+      across_cost_centers: "additive"
+      across_time: "additive"
+
+    null_handling: >
+      A missing actual or planned payroll value should not automatically
+      be interpreted as zero.
+
+  actual_payroll:
+    display_name: "Actual Payroll"
+
+    description: >
+      Total actual payroll expense incurred by a cost center and department
+      during a reporting month.
+
+    formula: "SUM(payroll_expense)"
+
+    source:
+      table: "business.department_monthly_performance"
+      column: "actual_payroll"
+
+    underlying_source:
+      table: "trusted.payroll"
+      column: "payroll_expense"
+
+    grain:
+      - cost_center
+      - department
+      - month
+      - year
+
+    unit: "currency"
+
+    aggregation:
+      across_departments: "additive"
+      across_cost_centers: "additive"
+      across_time: "additive"
+
+    null_handling: >
+      A missing actual payroll value should not automatically
+      be interpreted as zero.
+
+  planned_payroll:
+    display_name: "Planned Payroll"
+
+    description: >
+      Planned payroll expense for a cost center and department
+      during a reporting month.
+
+    source:
+      table: "business.department_monthly_performance"
+      column: "planned_payroll"
+
+    underlying_source:
+      table: "trusted.budget"
+      column: "planned_payroll"
+
+    grain:
+      - cost_center
+      - department
+      - month
+      - year
+
+    unit: "currency"
+
+    aggregation:
+      across_departments: "additive"
+      across_cost_centers: "additive"
+      across_time: "additive"
+
+    null_handling: >
+      A missing planned payroll value should not automatically
+      be interpreted as zero.
+
+
+  actual_headcount:
+    display_name: "Actual Headcount"
+
+    description: >
+      Number of distinct employees who were active for any portion
+      of the reporting month, based on the employee master.
+
+    formula: "COUNT(DISTINCT active employee_id)"
+
+    source:
+      table: "business.department_monthly_performance"
+      column: "actual_headcount"
+
+    underlying_source:
+      table: "trusted.employees"
+      columns:
+        - employee_id
+        - cost_center
+        - department
+        - start_date
+        - end_date
+
+    grain:
+      - cost_center
+      - department
+      - month
+      - year
+
+    unit: "employees"
+
+    business_rules:
+      active_employee:
+        start_date: "start_date <= last_day_of_reporting_month"
+        end_date: "end_date IS NULL OR end_date >= first_day_of_reporting_month"
+      payroll_activity_required: false
+
+    aggregation:
+      across_departments: "additive"
+      across_cost_centers: "additive"
+      across_time: "non_additive"
+
+    null_handling: >
+      An employee with a NULL end_date is treated as having no
+      recorded employment end date.
+
+  planned_headcount:
+    display_name: "Planned Headcount"
+
+    description: >
+      Planned number of employees for a cost center and department
+      during a reporting month.
+
+    source:
+      table: "business.department_monthly_performance"
+      column: "planned_headcount"
+
+    underlying_source:
+      table: "trusted.budget"
+      column: "planned_headcount"
+
+    grain:
+      - cost_center
+      - department
+      - month
+      - year
+
+    unit: "employees"
+
+    aggregation:
+      across_departments: "additive"
+      across_cost_centers: "additive"
+      across_time: "non_additive"
+
+    null_handling: >
+      A missing planned headcount value should not automatically
+      be interpreted as zero.
+
+  headcount_variance:
+    display_name: "Headcount Variance"
+
+    description: >
+      Difference between actual headcount and planned headcount
+      for a cost center and department during a reporting month.
+
+    formula: "actual_headcount - planned_headcount"
+
+    input_metrics:
+      - actual_headcount
+      - planned_headcount
+
+    source:
+      table: "business.department_monthly_performance"
+      column: "headcount_variance"
+
+    grain:
+      - cost_center
+      - department
+      - month
+      - year
+
+    unit: "employees"
+
+    interpretation:
+      positive: "Actual headcount is above plan"
+      negative: "Actual headcount is below plan"
+      zero: "Actual headcount equals plan"
+
+    aggregation:
+      across_departments: "additive"
+      across_cost_centers: "additive"
+      across_time: "non_additive"
+
+    null_handling: >
+      A missing actual or planned headcount value should not automatically
+      be interpreted as zero.

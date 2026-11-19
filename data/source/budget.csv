@@ -1,0 +1,7 @@
+Department,Cost Center,Month,Year,Planned headcount,Planned payroll
+Finance,C01,08,2026,3,"$50,000.00"
+HR,C01,08,2026,2,"$21,000.00"
+Supply Chain,C01,08,2026,1,"$15,000.00"
+Finance,C01,09,2026,3,"$50,000.00"
+HR,C01,09,2026,2,"$21,000.00"
+Supply Chain,C01,09,2026,1,"$15,000.00"
